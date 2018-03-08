@@ -187,7 +187,7 @@
         }
     };
     window.FR = function (graph, options) {
-        //调用其方法
+        // invoke the constructor
         return new FR(graph, options);
     };
 })(jQuery);

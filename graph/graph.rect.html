@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-cn">
+
+<head>
+	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.min.js"></script>
+	<script src="./src/util/jsonLoader.js"></script>
+	<script src="./json/miserables.json?callback=JSONLoader.load"></script>
+	<script src="./src/rectangle/rect.js"></script>
+</head>
+
+<body>
+	<div style="position:absolute;top:0;bottom:0;left:0;right:0;">
+		<div id="container1" style="height:100%;width:100%;display:inline-block;"></div>
+	</div>
+	<script>	
+		var chart2;
+		function draw(c, nodes, links) {
+			var option2 = {
+				title: {
+					text: 'Les Miserables by Rectangle Layout'
+				},
+				series: [
+					{
+						name: 'Les Miserables',
+						type: 'graph',
+						layout: 'none',
+						data: nodes,
+						links: links,
+						categories: [{ name: 1 }, { name: 2 }, { name: 3 }, { name: 4 }, { name: 5 }, { name: 6 }, { name: 7 }, { name: 8 }, { name: 9 }],
+						roam: true,
+						focusNodeAdjacency: true,
+						label: {
+							normal: {
+								position: 'right',
+								formatter: '{b}'
+							}
+						},
+						lineStyle: {
+							normal: {
+								color: 'source',
+								curveness: 0.3
+							}
+						}
+					}
+				]
+			};
+			c.setOption(option2);
+		}
+		function paint(graph) {
+			chart2 = echarts.init(document.getElementById("container1"));
+			var rect = new Rectangle(graph);
+			graph = rect.calculate();
+			draw(chart2, graph.nodes, graph.links);
+		}
+		$(function () {
+			paint(JSONLoader.data);
+		});
+	</script>
+</body>
+
+</html>
